@@ -1,0 +1,4 @@
+WhiteListResponse no_unions: true
+WhiteListRequest no_unions: true
+bluetooth_device_pb.mac max_size: 6
+bluetooth_device_pb.name max_length: 20

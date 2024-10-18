@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+message LaneLengthConfig {
+  float total_length_m = 1;
+  float line_length_m = 2;
+  float active_length_m = 3;
+  uint32 line_leds_num = 4;
+  uint32 finish_time_m = 5;
+  // we could calculate the distance between each led with the above two
+}
+
+enum LaneStatus {
+  FORWARD = 0;
+  BACKWARD = 1;
+  STOP = 2;
+  BLINK = 3;
+}
+
+message LaneColorConfig {
+  // first byte reserved.
+  // second byte is the red value,
+  // third byte is the green value,
+  // fourth byte is the blue value
+  uint32 rgb = 1;
+  // reserved
+  reserved 2;
+}
+
+message LaneSetStatus {
+  LaneStatus status = 1;
+}
+
+message LaneSetSpeed {
+  // in m/s
+  double speed = 1;
+}
+
+// go through Control Characteristic via Notify/Read
+message LaneState {
+  float shift = 1;
+  float speed = 2;
+  float head = 3;
+  float tail = 4;
+  /// the distance between the start/end of the lane and the head of trail
+  /// if the status is FORWARD, the head is the distance from the start
+  /// if the status is BACKWARD, the head is the distance from the end
+  LaneStatus status = 5;
+}
+
+// use to config the lane
+// go through Config Characteristic
+message LaneConfig {
+  oneof msg {
+    LaneLengthConfig length_cfg = 1;
+    LaneColorConfig color_cfg = 2;
+  }
+}
+
+// LaneConfigRO is the read-only version of LaneConfig
+// which contains all of the current config of the lane
+message LaneConfigRO {
+  LaneLengthConfig length_cfg = 1;
+  LaneColorConfig color_cfg = 2;
+}
+
+// use to control the lane
+// go through Control Characteristic vid Write. The lane would clear the characteristic after processing and
+// replace the buffer with `LaneState`
+message LaneControl {
+  oneof msg {
+    LaneSetStatus set_status = 1;
+    LaneSetSpeed set_speed = 2;
+  }
+}
+
+message PbLanePace {
+  repeated float pace_time_pct=1;
+  float accel = 2;
+  float turn_time=3;
+}

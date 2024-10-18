@@ -1,0 +1,24 @@
+[submodule "arduino"]
+	path = components/arduino
+	url = https://github.com/espressif/arduino-esp32
+[submodule "nanopb"]
+	path = components/nanopb/nanopb
+	url = https://github.com/nanopb/nanopb
+[submodule "nanopb_cpp"]
+	path = components/nanopb/nanopb_cpp
+	url = https://github.com/nanopb/nanopb_cpp
+[submodule "components/esp-nimble-cpp"]
+	path = components/esp-nimble-cpp
+	url = https://github.com/h2zero/esp-nimble-cpp
+[submodule "components/etl/etl"]
+	path = components/etl/etl
+	url = https://github.com/ETLCPP/etl
+[submodule "components/arduino"]
+	path = components/arduino
+	url = https://github.com/espressif/arduino-esp32
+[submodule "components/Adafruit_NeoPixel"]
+	path = components/NeoPixel/Adafruit_NeoPixel
+	url = https://github.com/adafruit/Adafruit_NeoPixel
+[submodule "components/RadioLib"]
+	path = components/RadioLib
+	url = https://github.com/crosstyan/RadioLib

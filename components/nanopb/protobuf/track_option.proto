@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+message MaxLed {
+  uint32 num = 1;
+}
+
+message CountLed {
+  uint32 num = 1;
+}
+
+message CircleLength {
+  float meter = 1;
+}
+
+message TrackOptions {
+  oneof options {
+    MaxLed max_led = 1;
+    CountLed count_led = 2;
+    CircleLength circle = 3;
+  }
+}

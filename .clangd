@@ -1,0 +1,6 @@
+# https://github.com/clangd/clangd/issues/1142
+CompileFlags:
+  Add: [-Wno-unknown-warning-option]
+  Remove: [-m*, -f*]
+Diagnostics:
+  Suppress: [attribute_section_invalid_for_target]

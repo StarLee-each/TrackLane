@@ -1,0 +1,43 @@
+{
+  "name": "Nanopb_Cpp",
+  "version": "dev",
+  "keywords": "protocol buffers, protobuf, google",
+  "description": "Nanopb_Cpp is a wrapper to use Nanopb in C++ projects",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nanopb/nanopb_cpp"
+  },
+  "authors": [{
+    "name": "Pavel Sokolov",
+    "email": "pavel@sokolov.me"
+  }],
+  "export": {
+    "include": [
+      "*.cpp",
+      "*.h",
+      "examples"
+    ],
+    "exclude": [
+      "examples/**/CMakeLists.txt"
+    ]
+  },
+  "srcDir": "",
+  "srcFilter": [
+    "+<nanopb_cpp.cpp>"
+  ],
+  "examples": [
+    {
+      "name": "Complex example",
+      "base": "examples/complex",
+      "files": [
+        "complex.options",
+        "complex.proto",
+        "converters.hpp",
+        "main.cpp",
+        "models.hpp"
+      ]
+    }
+  ],
+  "frameworks": "*",
+  "platforms": "*"
+}

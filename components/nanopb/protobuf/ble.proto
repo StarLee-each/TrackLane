@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+message WhiteItem {
+  oneof item {
+    // name is a regex
+    string name = 1;
+    bytes mac = 2;
+  }
+}
+
+message WhiteList {
+  repeated WhiteItem items = 1;
+}
+
+enum WhiteListCommand {
+  // response with list
+  REQUEST = 0;
+}
+
+enum WhiteListErrorCode {
+  OK = 0;
+  NULL = 1;
+  OUT_OF_MEMORY = 2;
+}
+
+message bluetooth_device_pb {
+  bytes mac = 1;
+  string name = 2;
+}
+
+//message scan_result_pb {
+//  repeated bluetooth_device_pb devices = 1;
+//}
+
+message WhiteListResponse {
+  oneof response {
+    WhiteList list = 1;
+    WhiteListErrorCode code = 2;
+  }
+}
+
+message WhiteListRequest {
+  oneof request {
+    WhiteListCommand command = 1;
+    WhiteList set = 2;
+  }
+}
+
+// see `hr_data.ksy`

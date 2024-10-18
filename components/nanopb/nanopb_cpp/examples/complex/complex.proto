@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package PROTO;
+
+
+enum Food {
+  Food_Invalid = 0;
+  Food_Meat = 1;
+  Food_Chicken = 2;
+  Food_Vegetable = 3;
+}
+
+
+
+message Relation {
+  enum Type {
+    Type_Invalid = 0;
+    Type_Parent = 1;
+    Type_Friend = 2;
+    Type_Child = 3;
+  }
+  string name = 1;
+  Type type = 2;
+  uint32 sinceYear = 3;
+  string comment = 4;
+}
+
+message Person {
+
+  message Adult {
+    string companyName = 1;
+    string position = 2;
+    float salary = 3;
+  }
+
+  message Child {
+    string schoolName = 1;
+    map<string, float> scores = 2;
+    uint32 schoolStartYear = 3;
+  }
+
+  string name = 1;
+  uint32 age = 2;
+  repeated Food likeFood = 3;
+  repeated Relation relations = 4;
+
+
+  oneof details {
+    Adult adult = 10;
+    Child child = 11;
+  }
+}
