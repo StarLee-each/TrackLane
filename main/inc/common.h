@@ -7,7 +7,7 @@
 #include <driver/gpio.h>
 #include "utils.h"
 namespace common {
-constexpr auto BLE_NAME = "lane";
+constexpr auto BLE_NAME = "lane-pool";
 
 constexpr auto BLE_SERVICE_UUID         = "15ce51cd-7f34-4a66-9187-37d30d3a1464";
 constexpr auto BLE_CHAR_HR_SERVICE_UUID = "180d";
@@ -33,11 +33,15 @@ namespace lanely {
   constexpr auto PREF_LINE_LEDs_NUM_NAME = "ln";
   constexpr auto PREF_TOTAL_LENGTH_NAME  = "to"; // float
   constexpr auto PREF_COLOR_NAME         = "co"; // uint32_t
+  constexpr auto PREF_FTIME_NAME         = "ft"; // uint32_t
+  constexpr auto PREF_ACCL_NAME           = "accl";
+  constexpr auto PREF_TURN_TIME_NAME     = "turn";
+  constexpr auto PREF_PACE_MODE_NAME    = "mode";
 
-  constexpr auto DEFAULT_ACTIVE_LENGTH  = meter(0.6);  // the line would be active for this length
-  constexpr auto DEFAULT_LINE_LENGTH    = meter(50);   // line... it would wrap around
+  constexpr auto DEFAULT_ACTIVE_LENGTH  = meter(1.5);  // the line would be active for this length
+  constexpr auto DEFAULT_LINE_LENGTH    = meter(50.0);   // line... it would wrap around
   constexpr auto DEFAULT_TARGET_LENGTH  = meter(1000); // like shift
-  constexpr auto DEFAULT_LINE_LEDs_NUM  = static_cast<uint32_t>(DEFAULT_LINE_LENGTH.count() * (100 / 3.3));
+  constexpr auto DEFAULT_LINE_LEDs_NUM  = static_cast<uint32_t>(DEFAULT_LINE_LENGTH.count() * (100 / 10.0));
   constexpr auto DEFAULT_FPS  = 10;
   constexpr auto DEFAULT_FINISH_TIME= 900;
   constexpr size_t DECODE_BUFFER_SIZE   = 2048;

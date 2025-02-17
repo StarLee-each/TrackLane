@@ -9,6 +9,7 @@
                 "${workspaceFolder}/components/arduino-libs/**",
                 "${workspaceFolder}/components/esp-nimble-cpp/**",
                 "${workspaceFolder}/components/nanopb/**",
+                "C:/Users/Administrator/Desktop/code/TrackLane/components/u8g2/**",
                 "C:\\Users\\gxy\\Desktop\\BLE\\esp-idf\\components\\**"
             ],
             "defines": [

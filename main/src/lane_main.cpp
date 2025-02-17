@@ -1,4 +1,6 @@
-#include <Arduino.h>
+
+#include <cstddef>
+#include <cstdint>
 #include <etl/map.h>
 #include <etl/random.h>
 #include <freertos/FreeRTOS.h>
@@ -9,6 +11,8 @@
 #include <RadioLib.h>
 #include <sdkconfig.h>
 #include "EspHal.h"
+#include "esp32-hal-gpio.h"
+#include "esp32-hal.h"
 #include "utils.h"
 #include "Lane.h"
 #include "whitelist.h"
@@ -17,8 +21,7 @@
 #include "hr_lora.h"
 #include "ble_hr_data.h"
 
-// #define DEBUG_SPEED
-
+//#define DEBUG_SPEED
 void *rf_receive_data = nullptr;
 struct rf_receive_data_t {
   EventGroupHandle_t evt_grp = nullptr;
@@ -265,132 +268,53 @@ extern "C" void app_main();
 void app_main() {
   constexpr auto TAG = "main";
   initArduino();
-
+  pinMode(22,OUTPUT);
+  pinMode(21,OUTPUT);
+  Serial.begin(115200);
   Preferences pref;
   pref.begin(PREF_RECORD_NAME, true);
-  const auto line_length   = pref.getFloat(PREF_LINE_LENGTH_NAME, DEFAULT_LINE_LENGTH.count());
-  const auto active_length = pref.getFloat(PREF_ACTIVE_LENGTH_NAME, DEFAULT_ACTIVE_LENGTH.count());
-  const auto line_LEDs_num = pref.getULong(PREF_LINE_LEDs_NUM_NAME, DEFAULT_LINE_LEDs_NUM);
+  const auto line_length_d   = pref.getFloat(PREF_LINE_LENGTH_NAME, DEFAULT_LINE_LENGTH.count());
+  const auto active_length_d = pref.getFloat(PREF_ACTIVE_LENGTH_NAME, DEFAULT_ACTIVE_LENGTH.count());
+  const auto line_LEDs_num_d = pref.getULong(PREF_LINE_LEDs_NUM_NAME, DEFAULT_LINE_LEDs_NUM);
   const auto total_length  = pref.getFloat(PREF_TOTAL_LENGTH_NAME, DEFAULT_TARGET_LENGTH.count());
-  const auto color         = pref.getULong(PREF_COLOR_NAME, utils::Colors::Red);
+  const auto color_d= pref.getULong(PREF_COLOR_NAME, utils::Colors::Red);
+  const auto finish_time_d= pref.getULong(PREF_FTIME_NAME, utils::Colors::Red);
   const auto default_cfg   = ::lane::LaneConfig{
-        .color         = color,
-        .line_length   = lane::meter(line_length),
-        .active_length = lane::meter(active_length),
+        .color         = color_d,
+        .line_length   = lane::meter(line_len),//common::lanely::meter(line_length)
+        .active_length = lane::meter(1.5),//lane::meter(active_length)
         .finish_length = lane::meter(total_length),
-        .line_LEDs_num = line_LEDs_num,
+        .line_LEDs_num = line_len*10,//49*10+5
         .fps           = DEFAULT_FPS,
+        .finish_time   = finish_time_d,
+        .head_offset = 0,//65
+  };
+  const auto turn_d = pref.getFloat(PREF_TURN_TIME_NAME,2.0);
+  const auto mode_d = pref.getUChar(PREF_PACE_MODE_NAME,0);
+  const auto acce_d = pref.getFloat(PREF_ACCL_NAME,0.5);
+  const auto default_pace = ::lane::LanePace{
+        .pace_num = 1,
+        .pace_time = {33,0,0,0,0},
+        .else_deal  = 0,
+        .platform_surface_time = 0,
+        .platform_surface_range = 0,
+        .acceleration = acce_d,
+        .turn_time = turn_d ,
+        .start_time = 0,
+        .pace_mode  =mode_d,
   };
   pref.end();
-
-  static auto hal    = EspHal(pin::SCK, pin::MISO, pin::MOSI);
-  static auto module = Module(&hal, pin::NSS, pin::DIO1, pin::LoRa_RST, pin::BUSY);
-  auto *rf_lock      = xSemaphoreCreateMutex();
-  if (rf_lock == nullptr) {
-    ESP_LOGE("rf", "failed to create rf_lock");
-    //esp_restart();
-  }
-  static auto rf = LLCC68(&module);
-  const auto st        = rf.begin(433.2, 500.0, 10, 7,
-                            RADIOLIB_SX126X_SYNC_WORD_PRIVATE, 22, 8, 1.6);
-  if (st != RADIOLIB_ERR_NONE) {
-    ESP_LOGE("rf", "failed, code %d", st);
-  //  esp_restart();
-  }
-
-/********* recv interrupt initialization *********/
-  auto evt_grp    = xEventGroupCreate();
-  rf_receive_data = new rf_receive_data_t{.evt_grp = evt_grp};
-  rf.setPacketReceivedAction([]() {
-    const auto *data      = static_cast<rf_receive_data_t *>(rf_receive_data);
-    BaseType_t task_woken = pdFALSE;
-    if (data->evt_grp != nullptr) {
-      const auto xResult = xEventGroupSetBitsFromISR(data->evt_grp, RecvEvt, &task_woken);
-      if (xResult != pdFAIL) {
-        portYIELD_FROM_ISR(task_woken);
-      }
-    }
-  });
-/********* end of recv interrupt initialization *********/
-
-/********* status requester **********/
-  static auto device_map        = device_name_map_t{};
-  static auto status_requester  = StatusRequester{};
-  status_requester.is_map_empty = []() {
-    return device_map.empty();
-  };
-  auto send_status_request = [rf_lock]() {
-    const auto req = HrLoRa::query_device_by_mac::t{
-        .addr = HrLoRa::query_device_by_mac::broadcast_addr};
-
-    uint8_t buf[16];
-    const auto sz = HrLoRa::query_device_by_mac::marshal(req, buf, sizeof(buf));
-    if (sz == 0) {
-      ESP_LOGE("send status request", "failed to marshal");
-      return;
-    }
-    try_transmit(buf, sz, rf_lock, send_lk_timeout_tick, rf);
-  };
-  status_requester.send_status_request = send_status_request;
-
-  /********* recv task initialization            *********/
-  static handle_message_callbacks_t handle_message_callbacks{};
-  auto recv_task = [evt_grp, rf_lock](LLCC68 &rf) {
-    constexpr auto TAG = "recv";
-    for (;;) {
-      xEventGroupWaitBits(evt_grp, RecvEvt, pdTRUE, pdFALSE, portMAX_DELAY);
-      uint8_t data[255];
-      const auto size = try_receive(data, sizeof(data), rf_lock, portMAX_DELAY, rf);
-      if (size == 0) {
-        continue;
-      } else {
-        ESP_LOGI(TAG, "data=%s(%d)", utils::toHex(data, size).c_str(), size);
-      }
-      // TODO: handle message stuff
-      handle_message(data, size, handle_message_callbacks);
-    }
-  };
-
-  struct recv_task_param_t {
-    std::function<void(LLCC68 &)> task;
-    LLCC68 *rf;
-    TaskHandle_t handle;
-    EventGroupHandle_t evt_grp;
-  };
-
-  /**
-   * a helper function to run a function on a new FreeRTOS task
-   */
-  auto run_recv_task = [](void *pvParameter) {
-    const auto param = static_cast<recv_task_param_t *>(pvParameter);
-    [[likely]] if (param->task != nullptr && param->rf != nullptr) {
-      param->task(*param->rf);
-    } else {
-      ESP_LOGW("recv task", "bad precondition");
-    }
-    const auto handle = param->handle;
-    delete param;
-    vTaskDelete(handle);
-  };
   
-  // static auto recv_param = recv_task_param_t{recv_task, &rf, nullptr, evt_grp};
-  // xTaskCreate(run_recv_task,
-  //             "recv", 4096,
-  //             &recv_param, 1,
-  //             &recv_param.handle);
-  // /********** end of recv task initialization **********/
-
-  // ESP_LOGI(TAG, "LoRa RF initiated");
-
-  /********* lane initialization *********/
+    /********* lane initialization *********/
   constexpr auto lane_task = [](void *param) {
     auto &lane = *static_cast<lane::Lane *>(param);
     lane.loop();
     ESP_LOGE("lane", "lane loop exited");
   };
-  auto s           = strip::AdafruitPixel(default_cfg.line_LEDs_num, pin::LED, common::lanely::PIXEL_TYPE);
+  auto s           = strip::AdafruitPixel(default_cfg.line_LEDs_num+default_cfg.head_offset, pin::LED, common::lanely::PIXEL_TYPE);
   static auto lane = lane::Lane{std::make_unique<decltype(s)>(std::move(s))};
   /********* end of lane initialization *********/
+
 
   /********* BLE initialization *********/
   NimBLEDevice::init(BLE_NAME);
@@ -399,117 +323,44 @@ void app_main() {
 
   lane.initBLE(server);
   lane.setConfig(default_cfg);
+  lane.setPace(default_pace);
+  lane.oled_init(default_pace.pace_mode);
+
   ESP_ERROR_CHECK(lane.begin());
 
-  auto &hr_service = *server.createService(BLE_CHAR_HR_SERVICE_UUID);
-  auto &hr_char    = *hr_service.createCharacteristic(BLE_CHAR_HEARTBEAT_UUID,
-                                                      NIMBLE_PROPERTY::READ | NIMBLE_PROPERTY::NOTIFY);
-  hr_service.start();
-
-  handle_message_callbacks = handle_message_callbacks_t{
-      .get_device_by_key = [](int key) -> std::optional<HrLoRa::hr_device::t> {
-        auto it = device_map.find(key);
-        if (it == device_map.end()) {
-          return std::nullopt;
-        } else {
-          if (it->second.device.has_value()) {
-            return std::make_optional(it->second.device.value());
-          } else {
-            return std::nullopt;
-          }
-        }
-      },
-      .update_device = [](repeater_t repeater) {
-        constexpr auto TAG = "update_device";
-        if (!repeater.device.has_value()){
-          ESP_LOGW(TAG, "null device");
-          return true;
-        }
-        auto repeater_addr = repeater.repeater_addr;
-        // search for the repeater's addr first
-        const auto addr_it = std::find_if(device_map.begin(), device_map.end(),
-                                    [&repeater_addr](const auto &pair) {
-                                      const auto [key, r] = pair;
-                                      return std::equal(r.repeater_addr.begin(),
-                                                        r.repeater_addr.end(),
-                                                        repeater_addr.begin());
-                                    });
-
-        if (addr_it == device_map.end()) {
-          // goto key_it since the repeater's addr is not in the map
-        } else {
-          // check if the key of the repeater is changed
-          if (repeater.key == addr_it->second.key) {
-            // same key, just update
-            addr_it->second = std::move(repeater);
-            return true;
-          } else {
-            // key mismatch, remove the old one
-            const auto &addr = addr_it->second.repeater_addr;
-            ESP_LOGI(TAG, "%s key %d (new) != %d (old)",
-                     utils::toHex(addr.data(),addr.size()).c_str(),
-                     addr_it->second.key, repeater.key);
-            device_map.erase(addr_it);
-          }
-        }
-
-        const auto key_it = device_map.find(repeater.key);
-        if (key_it == device_map.end()) {
-          if (device_map.size() >= MAX_DEVICE_COUNT) {
-            ESP_LOGW(TAG, "full device map; clear it");
-            device_map.clear();
-          }
-          const auto& addr = repeater.repeater_addr;
-          const auto& dev_addr = repeater.device->addr;
-          ESP_LOGI(TAG, "new repeater addr=%s; key=%d; dev_addr=%s; dev_name=%s;",
-                   utils::toHex(addr.data(), addr.size()).c_str(),
-                   repeater.key,
-                   utils::toHex(dev_addr.data(), dev_addr.size()).c_str(),
-                   repeater.device->name.c_str());
-          device_map.insert({repeater.key, std::move(repeater)});
-          return true;
-        } else {
-          auto &addr = key_it->second.repeater_addr;
-          ESP_LOGW(TAG, "key %d is already used by %s", repeater.key,
-                   utils::toHex(addr.data(), addr.size()).c_str());
-          return false;
-        } },
-      .on_hr_data    = [&hr_char](std::string name, int hr) {
-        constexpr auto TAG = "on_hr_data";
-        ESP_LOGI(TAG, "hr=%d; name=%s", hr, name.c_str());
-        const auto ble_hr_data = ble::hr_data::t{
-            .name = std::move(name),
-            .hr = static_cast<uint8_t>(hr)
-        };
-        uint8_t buf[32] = {0};
-        const auto sz         = ble::hr_data::marshal(ble_hr_data, buf, sizeof(buf));
-        if (sz == 0) {
-          ESP_LOGE(TAG, "failed to marshal");
-          return;
-        }
-        hr_char.setValue(buf, sz);
-        hr_char.notify(); },
-      .rf_send       = [rf_lock](uint8_t *pdata, size_t size) { try_transmit(pdata, size, rf_lock, send_lk_timeout_tick, rf); },
-  };
-
+  //
   auto &ad = *NimBLEDevice::getAdvertising();
   ad.setName(BLE_NAME);
   ad.setScanResponse(false);
 
-  status_requester.start();
+  // status_requester.start();
 
 #ifdef DEBUG_SPEED
-  lane.setStatus(lane::LaneStatus::FORWARD);
-  lane.setSpeed(2);
+  float test_pace[10] = {0.1,0.05,0.15,0.08,0.12,0.06,0.14,0.1,0.03,0.17};
+  lane.pace.acceleration = 2;
+  lane.pace.turn_time = 3;
+  lane.pace.pace_num = 10;
+  memcpy(lane.pace.pace_time_pct,test_pace,lane.pace.pace_num);
+  lane.pace.start_time = millis();
 #endif
 
+  auto scan_key_task = [] (void *p){
+    while(true){
+      lane.scan_key(key_down);
+      lane.scan_key(key_up);
+      vTaskDelay(5/portTICK_PERIOD_MS);
+    }
+  };
   // higher priority
+  xTaskCreate(scan_key_task, "scan_key", 4096, nullptr
+    ,6, nullptr);
+
   xTaskCreate(lane_task,
               "lane", 8192,
-              &lane, 5,
+              &lane, 1,
               nullptr);
-
   server.start();
+
   NimBLEDevice::startAdvertising();
   ESP_LOGI(TAG, "Initiated");
   vTaskDelete(nullptr);

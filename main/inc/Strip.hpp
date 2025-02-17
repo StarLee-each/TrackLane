@@ -19,12 +19,16 @@ public:
    * @param color
    * @return if the operation is successful
    */
-  virtual bool fill_and_show_forward(size_t start, size_t count, uint32_t color) {
+  virtual bool fill_and_show_forward(size_t start, size_t count, uint32_t color,uint8_t offset) {
     auto res = clear();
     if (!res) {
       return false;
     }
-    res = fill(start, count, color);
+    auto begin = start + offset - count;
+    // if(start < 20 or start > 480) {
+    //   ESP_LOGI("show","FOR fill begin= %d,head=%d",begin,start);
+    // }
+    res = fill(begin, count, color);
     if (!res) {
       return false;
     }
@@ -37,16 +41,16 @@ public:
    * @param color
    * @return if the operation is successful
    */
-  virtual bool fill_and_show_backward(size_t start, size_t count, uint32_t color) {
-    auto total = get_max_LEDs();
+  virtual bool fill_and_show_backward(size_t start, size_t count, uint32_t color,uint8_t offset, uint32_t total) {
     auto res   = clear();
     if (!res) {
       return false;
     }
-    if (total < start + count) {
-      return false;
-    }
-    res = fill(total - start - count, count, color);
+    auto begin = total - start + offset;
+    // if(start < 30 or start > 480) {
+    //   ESP_LOGI("show","BACK fill begin= %d,head=%d",begin,start);
+    // }
+    res = fill(begin, count, color);
     if (!res) {
       return false;
     }

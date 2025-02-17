@@ -14,29 +14,37 @@
 
 namespace lane {
 void Lane::ControlCharCallback::onWrite(NimBLECharacteristic *characteristic, NimBLEConnInfo &connInfo) {
-  auto TAG                  = "control";
+  const auto TAG                  = "control";
   auto data                 = characteristic->getValue();
   ::LaneControl control_msg = LaneControl_init_zero;
   auto ostream              = pb_istream_from_buffer(data.data(), data.size());
-  auto ok                   = pb_decode(&ostream, LaneControl_fields, &control_msg);
+  const auto ok                   = pb_decode(&ostream, LaneControl_fields, &control_msg);
   if (!ok) {
     ESP_LOGE(TAG, "Failed to decode the control message");
     return;
   }
   switch (control_msg.which_msg) {
     case LaneControl_set_speed_tag:
-      ESP_LOGI(TAG, "Set speed to %f", control_msg.msg.set_speed.speed);
-      lane.setSpeed(control_msg.msg.set_speed.speed);
+      if(control_msg.msg.set_speed.speed>0){
+        ESP_LOGI(TAG, "Set speed to %f", control_msg.msg.set_speed.speed);
+        lane.setSpeed(control_msg.msg.set_speed.speed);
+        lane.setActMode(lane::ActMode::SPEED_RELY);
+        lane.showTestSpeed(lane.params.speed);
+        }
       break;
     case LaneControl_set_status_tag:
-      ESP_LOGI(TAG, "Set status to %d", control_msg.msg.set_status.status);
-      lane.setStatus(control_msg.msg.set_status.status);
+      if(control_msg.msg.set_status.status != ::LaneStatus_KEEP) {
+        ESP_LOGI(TAG, "Set status to %d", control_msg.msg.set_status.status);
+        lane.setStatus(control_msg.msg.set_status.status);
+      }
       break;
     default:
       ESP_LOGE(TAG, "Unknown message type");
       break;
   }
 }
+
+
 
 void Lane::ConfigCharCallback::onWrite(NimBLECharacteristic *characteristic, NimBLEConnInfo &connInfo) {
   using namespace common::lanely;
@@ -62,22 +70,26 @@ void Lane::ConfigCharCallback::onWrite(NimBLECharacteristic *characteristic, Nim
         ESP_LOGE(TAG, "Can't change the length while the lane is running");
         return;
       }
-      ESP_LOGI(TAG, "line length=%.2f; active length=%.2f; total length=%.2f; line LEDs=%ld; finish time=%d",
+      ESP_LOGI(TAG, "line length=%.2f; active length=%.2f; total length=%.2f; line LEDs=%ld; finish time=%d; head_offset=%d;",
                config_msg.msg.length_cfg.line_length_m,
                config_msg.msg.length_cfg.active_length_m,
                config_msg.msg.length_cfg.total_length_m,
                config_msg.msg.length_cfg.line_leds_num,
-               config_msg.msg.length_cfg.finish_time_m);
+               config_msg.msg.length_cfg.finish_time_m,
+               config_msg.msg.length_cfg.head_offset);
       lane.pref.putFloat(PREF_LINE_LENGTH_NAME, config_msg.msg.length_cfg.line_length_m);
       lane.pref.putFloat(PREF_ACTIVE_LENGTH_NAME, config_msg.msg.length_cfg.active_length_m);
       lane.pref.putFloat(PREF_TOTAL_LENGTH_NAME, config_msg.msg.length_cfg.total_length_m);
       lane.pref.putULong(PREF_LINE_LEDs_NUM_NAME, config_msg.msg.length_cfg.line_leds_num);
+      lane.pref.putULong(PREF_FTIME_NAME, config_msg.msg.length_cfg.finish_time_m);
       lane.cfg.line_length   = meter(config_msg.msg.length_cfg.line_length_m);
       lane.cfg.active_length = meter(config_msg.msg.length_cfg.active_length_m);
       lane.cfg.finish_length = meter(config_msg.msg.length_cfg.total_length_m);
       lane.cfg.line_LEDs_num = config_msg.msg.length_cfg.line_leds_num;
       lane.cfg.finish_time = config_msg.msg.length_cfg.finish_time_m;
+      lane.cfg.head_offset = config_msg.msg.length_cfg.head_offset;
       lane.setMaxLEDs(config_msg.msg.length_cfg.line_leds_num);
+      lane.mode_update(24);
       break;
     }
   }
@@ -97,6 +109,9 @@ void Lane::ConfigCharCallback::onRead(NimBLECharacteristic *pCharacteristic, Nim
   config_msg.length_cfg.total_length_m  = lane.cfg.finish_length.count();
   config_msg.length_cfg.line_leds_num   = lane.cfg.line_LEDs_num;
   config_msg.color_cfg.rgb              = lane.cfg.color;
+  config_msg.length_cfg.finish_time_m   = lane.cfg.finish_time;
+  config_msg.length_cfg.head_offset    = lane.cfg.head_offset;
+
   ESP_LOGI(TAG, "line length=%.2f; active length=%.2f; total length=%.2f; line LEDs=%ld; Color=0x%06lx",
            config_msg.length_cfg.line_length_m, config_msg.length_cfg.active_length_m,
            config_msg.length_cfg.total_length_m, config_msg.length_cfg.line_leds_num,
@@ -120,17 +135,33 @@ void Lane::PaceCharCallback::onWrite(NimBLECharacteristic *characteristic, NimBL
   auto ok                 = pb_decode( &istream, PbLanePace_fields, &pace_msg);
 
   if (!ok) {
-    ESP_LOGE("LANE", "Failed to decode the pace message");
+    ESP_LOGE("LANE-PACE", "Failed to decode the pace message");
     return;
   }
-  ESP_LOGI(TAG, "turn time=%.2f; acceleration=%.2f;",pace_msg.turn_time,pace_msg.accel);
+  ESP_LOGI(TAG, "turn time=%.2f; acceleration=%.2f; pace_num=%d; else_deal=%.2f; surface_time=%.2f; surface_range=%.2f"
+    ,lane.pace.turn_time,lane.pace.acceleration,lane.pace.pace_num,lane.pace.else_deal,lane.pace.platform_surface_time,lane.pace.platform_surface_range);
   ESP_LOGI(TAG, "pace each init:");
-  for(auto i=0;i<pace_msg.pace_time_pct_count;i++){
-    printf("stage %d : %.2f %\r\n",i,pace_msg.pace_time_pct[i]);
+  for(auto i=0;i<5;i++){
+    Serial.printf("stage %d write : %.2f \r\n",i,pace_msg.pace_time[i]);
   }
-  memcpy(lane.pace.pace_time_pct,pace_msg.pace_time_pct,pace_msg.pace_time_pct_count);
-  lane.pace.pace_num = pace_msg.pace_time_pct_count;
+  memcpy(lane.pace.pace_time,pace_msg.pace_time,pace_msg.pace_time_count*4);
+  for(auto i=0;i<pace_msg.pace_time_count;i++){
+    Serial.printf("stage %d changed to : %.2f \r\n",i,lane.pace.pace_time[i]);
+  }
+  ESP_LOGI(TAG, "pace RCV else_deal:%.2f",pace_msg.else_deal);
+  lane.pace.pace_num = pace_msg.pace_num;
+  lane.pace.else_deal= pace_msg.else_deal;
+  lane.pace.platform_surface_time = pace_msg.platform_surface_time;
+  lane.pace.platform_surface_range= pace_msg.platform_surface_range;
   lane.pace.turn_time= pace_msg.turn_time;
-  lane.pace.acceleration = pace_msg.accel;
+  lane.pace.acceleration = pace_msg.acceleration;
+  ESP_LOGI("CHANGES TO:", "turn time=%.2f; acceleration=%.2f; pace_num=%d; else_deal=%.2f; surface_time=%.2f; surface_range=%.2f"
+     ,lane.pace.turn_time,lane.pace.acceleration,lane.pace.pace_num,lane.pace.else_deal,lane.pace.platform_surface_time,lane.pace.platform_surface_range);
+  lane.pref.begin(PREF_RECORD_NAME, false);
+  lane.pref.putFloat(PREF_TURN_TIME_NAME,lane.pace.turn_time);
+  lane.pref.putFloat(PREF_ACCL_NAME,lane.pace.acceleration);
+
+  lane.pref.end();
 }
+
 };
