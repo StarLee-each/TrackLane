@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Administrator/esp-idf/components/esp_system/port
+# Install script for directory: D:/tools/esp-idf-v4.4.8/components/esp_system/port
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

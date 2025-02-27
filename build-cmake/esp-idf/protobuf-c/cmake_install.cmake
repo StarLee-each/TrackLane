@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Administrator/esp-idf/components/protobuf-c
+# Install script for directory: D:/tools/esp-idf-v4.4.8/components/protobuf-c
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

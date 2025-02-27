@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 file(MAKE_DIRECTORY
-  "C:/Users/Administrator/esp-idf/components/bootloader/subproject"
+  "D:/tools/esp-idf-v4.4.8/components/bootloader/subproject"
   "C:/Users/Administrator/Desktop/code/TrackLane/build-cmake/bootloader"
   "C:/Users/Administrator/Desktop/code/TrackLane/build-cmake/bootloader-prefix"
   "C:/Users/Administrator/Desktop/code/TrackLane/build-cmake/bootloader-prefix/tmp"

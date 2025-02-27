@@ -77,11 +77,6 @@ void Lane::ConfigCharCallback::onWrite(NimBLECharacteristic *characteristic, Nim
                config_msg.msg.length_cfg.line_leds_num,
                config_msg.msg.length_cfg.finish_time_m,
                config_msg.msg.length_cfg.head_offset);
-      lane.pref.putFloat(PREF_LINE_LENGTH_NAME, config_msg.msg.length_cfg.line_length_m);
-      lane.pref.putFloat(PREF_ACTIVE_LENGTH_NAME, config_msg.msg.length_cfg.active_length_m);
-      lane.pref.putFloat(PREF_TOTAL_LENGTH_NAME, config_msg.msg.length_cfg.total_length_m);
-      lane.pref.putULong(PREF_LINE_LEDs_NUM_NAME, config_msg.msg.length_cfg.line_leds_num);
-      lane.pref.putULong(PREF_FTIME_NAME, config_msg.msg.length_cfg.finish_time_m);
       lane.cfg.line_length   = meter(config_msg.msg.length_cfg.line_length_m);
       lane.cfg.active_length = meter(config_msg.msg.length_cfg.active_length_m);
       lane.cfg.finish_length = meter(config_msg.msg.length_cfg.total_length_m);
@@ -89,6 +84,12 @@ void Lane::ConfigCharCallback::onWrite(NimBLECharacteristic *characteristic, Nim
       lane.cfg.finish_time = config_msg.msg.length_cfg.finish_time_m;
       lane.cfg.head_offset = config_msg.msg.length_cfg.head_offset;
       lane.setMaxLEDs(config_msg.msg.length_cfg.line_leds_num);
+      lane.pref.putFloat(PREF_LINE_LENGTH_NAME, config_msg.msg.length_cfg.line_length_m);
+      lane.pref.putFloat(PREF_ACTIVE_LENGTH_NAME, config_msg.msg.length_cfg.active_length_m);
+      lane.pref.putFloat(PREF_TOTAL_LENGTH_NAME, config_msg.msg.length_cfg.total_length_m);
+      lane.pref.putULong(PREF_LINE_LEDs_NUM_NAME, config_msg.msg.length_cfg.line_leds_num);
+      lane.pref.putULong(PREF_FTIME_NAME, config_msg.msg.length_cfg.finish_time_m);
+      lane.pref.putULong(PREF_HEAD_OFFSET_NAME, config_msg.msg.length_cfg.head_offset);
       lane.mode_update(24);
       break;
     }
@@ -144,9 +145,11 @@ void Lane::PaceCharCallback::onWrite(NimBLECharacteristic *characteristic, NimBL
   for(auto i=0;i<5;i++){
     Serial.printf("stage %d write : %.2f \r\n",i,pace_msg.pace_time[i]);
   }
+  lane.pref.begin(PREF_RECORD_NAME, false);
   memcpy(lane.pace.pace_time,pace_msg.pace_time,pace_msg.pace_time_count*4);
   for(auto i=0;i<pace_msg.pace_time_count;i++){
     Serial.printf("stage %d changed to : %.2f \r\n",i,lane.pace.pace_time[i]);
+    lane.pref.putFloat(static_cast<String>(i).c_str(),lane.pace.pace_time[i]);
   }
   ESP_LOGI(TAG, "pace RCV else_deal:%.2f",pace_msg.else_deal);
   lane.pace.pace_num = pace_msg.pace_num;
@@ -157,7 +160,10 @@ void Lane::PaceCharCallback::onWrite(NimBLECharacteristic *characteristic, NimBL
   lane.pace.acceleration = pace_msg.acceleration;
   ESP_LOGI("CHANGES TO:", "turn time=%.2f; acceleration=%.2f; pace_num=%d; else_deal=%.2f; surface_time=%.2f; surface_range=%.2f"
      ,lane.pace.turn_time,lane.pace.acceleration,lane.pace.pace_num,lane.pace.else_deal,lane.pace.platform_surface_time,lane.pace.platform_surface_range);
-  lane.pref.begin(PREF_RECORD_NAME, false);
+  lane.pref.putULong(PREF_PACE_NUM_NAME,lane.pace.pace_num);
+  lane.pref.putFloat(PREF_ELSE_DEAL_NAME,lane.pace.else_deal);
+  lane.pref.putFloat(PREF_SURFACE_TIME_NAME,lane.pace.platform_surface_time);
+  lane.pref.putFloat(PREF_SURFACE_RANGE_NAME,lane.pace.platform_surface_range);
   lane.pref.putFloat(PREF_TURN_TIME_NAME,lane.pace.turn_time);
   lane.pref.putFloat(PREF_ACCL_NAME,lane.pace.acceleration);
 

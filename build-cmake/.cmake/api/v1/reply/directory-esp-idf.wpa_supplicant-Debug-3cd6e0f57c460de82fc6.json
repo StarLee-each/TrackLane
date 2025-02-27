@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "esp-idf/wpa_supplicant",
+		"source" : "D:/tools/esp-idf-v4.4.8/components/wpa_supplicant"
+	}
+}

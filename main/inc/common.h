@@ -34,9 +34,14 @@ namespace lanely {
   constexpr auto PREF_TOTAL_LENGTH_NAME  = "to"; // float
   constexpr auto PREF_COLOR_NAME         = "co"; // uint32_t
   constexpr auto PREF_FTIME_NAME         = "ft"; // uint32_t
-  constexpr auto PREF_ACCL_NAME           = "accl";
-  constexpr auto PREF_TURN_TIME_NAME     = "turn";
-  constexpr auto PREF_PACE_MODE_NAME    = "mode";
+  constexpr auto PREF_PACE_NUM_NAME     = "pace_num";//u8
+  constexpr auto PREF_ELSE_DEAL_NAME     = "else_d";//float
+  constexpr auto PREF_SURFACE_TIME_NAME     = "sur_t";//float
+  constexpr auto PREF_SURFACE_RANGE_NAME     = "sur_s";//float
+  constexpr auto PREF_ACCL_NAME           = "accl";//float
+  constexpr auto PREF_TURN_TIME_NAME     = "turn";//float
+  constexpr auto PREF_PACE_MODE_NAME    = "mode";//u8
+  constexpr auto PREF_HEAD_OFFSET_NAME    = "h_offset";//u8
 
   constexpr auto DEFAULT_ACTIVE_LENGTH  = meter(1.5);  // the line would be active for this length
   constexpr auto DEFAULT_LINE_LENGTH    = meter(50.0);   // line... it would wrap around

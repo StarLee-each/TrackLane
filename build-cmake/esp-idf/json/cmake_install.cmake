@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Administrator/esp-idf/components/json
+# Install script for directory: D:/tools/esp-idf-v4.4.8/components/json
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

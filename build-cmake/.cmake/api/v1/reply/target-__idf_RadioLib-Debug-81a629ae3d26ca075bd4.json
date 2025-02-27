@@ -1,0 +1,1227 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "esp-idf/RadioLib/libRadioLib.a"
+		}
+	],
+	"backtrace" : 2,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"idf_component_register",
+			"add_compile_options",
+			"add_cxx_compile_options",
+			"add_compile_definitions",
+			"include_directories",
+			"target_include_directories",
+			"__component_add_include_dirs"
+		],
+		"files" : 
+		[
+			"D:/tools/esp-idf-v4.4.8/tools/cmake/component.cmake",
+			"components/RadioLib/CMakeLists.txt",
+			"D:/tools/esp-idf-v4.4.8/tools/cmake/utilities.cmake",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 478,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 456,
+				"parent" : 1
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 458,
+				"parent" : 1
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 276,
+				"parent" : 4
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 467,
+				"parent" : 1
+			},
+			{
+				"file" : 3
+			},
+			{
+				"command" : 4,
+				"file" : 3,
+				"line" : 12,
+				"parent" : 7
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 455,
+				"parent" : 1
+			},
+			{
+				"command" : 7,
+				"file" : 0,
+				"line" : 480,
+				"parent" : 1
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 309,
+				"parent" : 10
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 309,
+				"parent" : 10
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-mlongcalls -Wno-frame-address  -g -fdiagnostics-color=always"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-ffunction-sections"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fdata-sections"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Werror=all"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-error=unused-function"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-error=unused-variable"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-error=deprecated-declarations"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-unused-parameter"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-sign-compare"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-ggdb"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Og"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fmacro-prefix-map=C:/Users/Administrator/Desktop/code/TrackLane=."
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fmacro-prefix-map=D:/tools/esp-idf-v4.4.8=IDF"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fstrict-volatile-bitfields"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wno-error=unused-but-set-variable"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fno-jump-tables"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-fno-tree-switch-conversion"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-std=gnu++11"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fno-exceptions"
+				},
+				{
+					"backtrace" : 5,
+					"fragment" : "-fno-rtti"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-D_GNU_SOURCE"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-DIDF_VER=\\\"v4.4.8\\\""
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-DESP_PLATFORM"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-D_POSIX_READER_WRITER_LOCKS"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 8,
+					"define" : "ARDUINO_ARCH_ESP32=1"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 9,
+					"path" : "C:/Users/Administrator/Desktop/code/TrackLane/build-cmake/config"
+				},
+				{
+					"backtrace" : 11,
+					"path" : "C:/Users/Administrator/Desktop/code/TrackLane/components/RadioLib"
+				},
+				{
+					"backtrace" : 12,
+					"path" : "C:/Users/Administrator/Desktop/code/TrackLane/components/RadioLib/src"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/newlib/platform_include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/freertos/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/freertos/include/esp_additions/freertos"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/freertos/port/xtensa/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/freertos/include/esp_additions"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_hw_support/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_hw_support/include/soc"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_hw_support/include/soc/esp32"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_hw_support/port/esp32/."
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_hw_support/port/esp32/private_include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/heap/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/log/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/lwip/include/apps"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/lwip/include/apps/sntp"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/lwip/lwip/src/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/lwip/port/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/lwip/port/esp32/include/arch"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/soc/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/soc/esp32/."
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/soc/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/hal/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/hal/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/hal/platform_port/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_rom/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_rom/include/esp32"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_rom/esp32"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_common/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_system/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_system/port/soc"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_system/port/public_compat"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/xtensa/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/xtensa/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/driver/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/driver/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_pm/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_ringbuf/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/efuse/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/efuse/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/vfs/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_wifi/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_event/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_netif/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_eth/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/tcpip_adapter/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_phy/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_phy/esp32/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_ipc/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/app_trace/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "D:/tools/esp-idf-v4.4.8/components/esp_timer/include"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				4,
+				6,
+				10,
+				12,
+				14,
+				18,
+				20,
+				22,
+				24,
+				26,
+				28,
+				30,
+				32,
+				34,
+				36,
+				39,
+				41,
+				43,
+				45,
+				47,
+				49,
+				51,
+				53,
+				55,
+				57,
+				59,
+				61,
+				63,
+				65,
+				67,
+				69,
+				71,
+				73,
+				75,
+				77,
+				79,
+				81,
+				83,
+				85,
+				87,
+				88,
+				90,
+				92,
+				94,
+				96,
+				98,
+				100,
+				102,
+				104,
+				106
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "__idf_esp_ringbuf::@ad62994b1ce98b81017d"
+		}
+	],
+	"id" : "__idf_RadioLib::@fbc98ba195b056133f9d",
+	"name" : "__idf_RadioLib",
+	"nameOnDisk" : "libRadioLib.a",
+	"paths" : 
+	{
+		"build" : "esp-idf/RadioLib",
+		"source" : "components/RadioLib"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				4,
+				6,
+				10,
+				12,
+				14,
+				18,
+				20,
+				22,
+				24,
+				26,
+				28,
+				30,
+				32,
+				34,
+				36,
+				39,
+				41,
+				43,
+				45,
+				47,
+				49,
+				51,
+				53,
+				55,
+				57,
+				59,
+				61,
+				63,
+				65,
+				67,
+				69,
+				71,
+				73,
+				75,
+				77,
+				79,
+				81,
+				83,
+				85,
+				87,
+				88,
+				90,
+				92,
+				94,
+				96,
+				98,
+				100,
+				102,
+				104,
+				106
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				5,
+				7,
+				8,
+				9,
+				11,
+				13,
+				15,
+				16,
+				17,
+				19,
+				21,
+				23,
+				25,
+				27,
+				29,
+				31,
+				33,
+				35,
+				37,
+				38,
+				40,
+				42,
+				44,
+				46,
+				48,
+				50,
+				52,
+				54,
+				56,
+				58,
+				60,
+				62,
+				64,
+				66,
+				68,
+				70,
+				72,
+				74,
+				76,
+				78,
+				80,
+				82,
+				84,
+				86,
+				89,
+				91,
+				93,
+				95,
+				97,
+				99,
+				101,
+				103,
+				105,
+				107
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/ArduinoHal.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/ArduinoHal.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/BuildOpt.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/BuildOptUser.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/Hal.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/Hal.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/Module.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/Module.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/RadioLib.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/TypeDef.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/CC1101/CC1101.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/CC1101/CC1101.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/LLCC68/LLCC68.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/LLCC68/LLCC68.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/RF69/RF69.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RF69/RF69.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RFM2x/RFM22.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RFM2x/RFM23.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM95.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM95.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM96.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM96.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM97.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/RFM9x/RFM97.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX1231/SX1231.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX1231/SX1231.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/STM32WLx.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/STM32WLx.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/STM32WLx_Module.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/STM32WLx_Module.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1261.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1261.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1262.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1262.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1268.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/SX1268.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX126x/SX126x.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/SX126x.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX126x/patches/SX126x_patch_scan.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1272.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1272.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1273.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1273.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1276.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1276.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1277.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1277.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1278.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1278.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1279.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX1279.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX127x/SX127x.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX127x/SX127x.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1280.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1280.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1281.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1281.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1282.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX128x/SX1282.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/SX128x/SX128x.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/SX128x/SX128x.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4430.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4430.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4431.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4431.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4432.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/Si443x/Si4432.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/Si443x/Si443x.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/Si443x/Si443x.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/modules/nRF24/nRF24.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/modules/nRF24/nRF24.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/AFSK/AFSK.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/AFSK/AFSK.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/APRS/APRS.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/APRS/APRS.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/AX25/AX25.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/AX25/AX25.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/BellModem/BellModem.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/BellModem/BellModem.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/ExternalRadio/ExternalRadio.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/ExternalRadio/ExternalRadio.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/FSK4/FSK4.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/FSK4/FSK4.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/Hellschreiber/Hellschreiber.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/Hellschreiber/Hellschreiber.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/LoRaWAN/LoRaWAN.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/LoRaWAN/LoRaWAN.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/LoRaWAN/LoRaWANBands.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/Morse/Morse.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/Morse/Morse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/Pager/Pager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/Pager/Pager.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/PhysicalLayer/PhysicalLayer.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/PhysicalLayer/PhysicalLayer.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/Print/ITA2String.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/Print/ITA2String.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/Print/Print.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/Print/Print.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/RTTY/RTTY.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/RTTY/RTTY.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/protocols/SSTV/SSTV.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/protocols/SSTV/SSTV.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/utils/CRC.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/utils/CRC.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/utils/Cryptography.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/utils/Cryptography.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 2,
+			"compileGroupIndex" : 0,
+			"path" : "components/RadioLib/src/utils/FEC.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 2,
+			"path" : "components/RadioLib/src/utils/FEC.h",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

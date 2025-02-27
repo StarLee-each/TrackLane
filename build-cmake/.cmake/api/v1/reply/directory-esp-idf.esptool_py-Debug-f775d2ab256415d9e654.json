@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "esp-idf/esptool_py",
+		"source" : "D:/tools/esp-idf-v4.4.8/components/esptool_py"
+	}
+}

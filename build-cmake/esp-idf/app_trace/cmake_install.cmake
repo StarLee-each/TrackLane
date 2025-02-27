@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Administrator/esp-idf/components/app_trace
+# Install script for directory: D:/tools/esp-idf-v4.4.8/components/app_trace
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
